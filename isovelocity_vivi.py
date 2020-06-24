@@ -58,6 +58,16 @@ vel_thin = rotate(vel_thin,pa)
 
 # solve for t
 def f(t,ixp,iyp):
+    """
+    intersection of line with cone
+
+    Args: 
+        t (array):are the solution of a line intersecting a cone
+        ixp ():
+        iyp ():
+    Returns:
+        array:
+    """
     return (np.cos(2*i) + np.cos(2*phi))*t**2 - (2*np.sin(phi)**2*2*iyp*np.tan(i))*t - (2*np.sin(phi)**2*(ixp**2 + iyp**2*seci**2 ))
 
 seci = 1/np.cos(i)
