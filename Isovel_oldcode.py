@@ -7,13 +7,6 @@ from scipy.ndimage.interpolation import rotate
 # constants
 G = 6.67408e-8 # cm3 g-1 s-2
 Msun = 1.989e33 # g
-au = 1.496e13 # cm
-
-# AS209
-mstar = 0.9*Msun
-i = np.radians(180+34.88677) # south is closer
-#i = np.radians(360-34.88677) # north is closer
-phi = np.radians(15.)
 Rmax = 300. # au
 vmax = 5
 vsou = 4.75
