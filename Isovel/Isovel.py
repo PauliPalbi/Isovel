@@ -45,3 +45,10 @@ def Isovel(PA, mstar, inc, dist, vlsr, z0, psi):
 
 
     return a*b
+
+
+
+
+########
+# check this out 
+# from gofish import imagecube, _keplerian
