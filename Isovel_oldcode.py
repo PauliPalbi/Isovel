@@ -26,6 +26,8 @@ xxp, yyp = np.meshgrid(xp, yp)
 # deprojected coords y = yp/cosi
 xx = xxp
 yy = yyp/np.cos(i)
+
+
 rr = np.sqrt(xx**2+yy**2) # au
 rr_cm = rr*au # cm
 theta = np.arctan2(yy,xx)
@@ -63,6 +65,7 @@ def f(t,ixp,iyp):
     """
     return (np.cos(2*i) + np.cos(2*phi))*t**2 - (2*np.sin(phi)**2*2*iyp*np.tan(i))*t - (2*np.sin(phi)**2*(ixp**2 + iyp**2*seci**2 ))
 
+'''
 seci = 1/np.cos(i)
 tt_near = np.zeros(yyp.shape) # near side of the disk
 tt_far = np.zeros(yyp.shape) # far side of the disk
@@ -80,7 +83,9 @@ for ix in range(nx):
 xx = xxp
 yy_near = yyp/np.cos(i) + tt_near*np.sin(i)
 zz_near = tt_near*np.cos(i)
+
 rr_near = np.sqrt(xx**2+yy_near**2+zz_near**2) # au
+
 #rr_pos = np.sqrt(xx**2+yy_pos**2) # au
 rr_near_cm = rr_near*au # cm
 theta_near = np.arctan2(yy_near,xx)
@@ -91,15 +96,22 @@ rr_far = np.sqrt(xx**2+yy_far**2+zz_far**2) # au
 #rr_neg = np.sqrt(xx**2+yy_neg**2) # au
 rr_far_cm = rr_far*au # cm
 theta_far = np.arctan2(yy_far,xx)
+'''
 
-vel_near = np.sqrt(G*mstar/rr_near_cm)*np.sin(i)*np.cos(theta_near)/1e5 # km/s
-vel_far = np.sqrt(G*mstar/rr_far_cm)*np.sin(i)*np.cos(theta_far)/1e5 # km/s
+###
+'''
+vel_near = np.sqrt(G*mstar/rr_near_cm) * np.sin(i)*np.cos(theta_near)/1e5 # km/s
+vel_far = np.sqrt(G*mstar/rr_far_cm) * np.sin(i)*np.cos(theta_far)/1e5 # km/s
+
 
 # rotate
 vel_near = rotate(vel_near,pa)
 vel_far = rotate(vel_far,pa)
-
+'''
 # Plot
+
+
+'''
 fig, (ax1,ax2,ax3,ax4) = pl.subplots(1,4,figsize=(10,10))
 ext=[-Rmax,Rmax,-Rmax,Rmax]
 
@@ -127,3 +139,4 @@ for ax in ax1,ax2,ax3,ax4:
 
 
 pl.show()
+'''

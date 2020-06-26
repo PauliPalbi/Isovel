@@ -147,15 +147,4 @@ def fit_eddy(path, name_file, d, p0, r_min, r_max, downsample=20,
     # Return cube, samples, percentiles and results of best fit in dicti format
     return cube, samples, percentiles, dicti
 
-
-'''
-# How to run it to get bestfit
-# If you want to check the mask, or save plots use just_results=False and see Eddy documentation to save plots
-
-import fit_shape
-dicti = fit_shape.fit_Gas('/Volumes/Transcend/J1615_2020/DataWork/Results/CO/',
-                    'J1615_12CO_im_uv006_', 
-                    157.68621074959017, 0, 0, 1.183, 4744.6190, 0.2471, 1.1814, 325.03, 46.883)
-print(dicti)
-'''
     
