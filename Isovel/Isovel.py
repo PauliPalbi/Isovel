@@ -100,7 +100,7 @@ class Isovel:
         return rr_km, theta
 
 
-    def f(self, t, ixp, iyp):
+    def function_int(self, t, ixp, iyp):
         """
         we assume flared is a cone
 
@@ -132,7 +132,8 @@ class Isovel:
         a = (np.cos( 2 * inc) + np.cos( 2 * self.phi)) * t**2 
         b = - (2 * np.sin(self.phi)**2 * 2 * iyp * np.tan(inc)) * t 
         c = - (2 * np.sin(self.phi)**2 * (ixp**2 + iyp**2 * seci**2 ))
-        return a+b+c
+        res = a+b+c
+        return res
 
     def surface_projection(self, xxp, yyp):
         """
@@ -143,7 +144,7 @@ class Isovel:
         tt_back = np.zeros(yyp.shape) # back side of the disk
         for ix in range(self.nx):
             for iy in range(self.ny):
-                sol = optimize.root(f, [0.], args=(xxp[ix,iy],yyp[ix,iy]), method='lm')
+                sol = optimize.root(function_int, [0.], args=(xxp[ix,iy],yyp[ix,iy]), method='lm')
                 if self.inc<180:
                     tt_front[ix,iy] = np.abs(sol.x) # au
                     tt_back[ix,iy] = -np.abs(sol.x)
@@ -181,7 +182,7 @@ class Isovel:
 
         vel_front = self.Keplerian_rotation(rr_front, theta_front)
         vel_back = self.Keplerian_rotation(rr_back, theta_back)
-
+        '''
         pa = np.radians(self.pa)
         mask_contour_front = rotate(rr_front, pa, reshape=False)[:][:]>border
         mask_contour_back= rotate(rr_back, pa, reshape=False)[:][:]>border
@@ -190,7 +191,7 @@ class Isovel:
         vel_front = np.ma.array(vel_front, mask=mask_contour_front)
         vel_back = np.ma.array(vel_back, mask=mask_contour_back)
         vel_thin = np.ma.array(vel_thin, mask=mask_contour_thin)
-
+        '''
         return vel_thin, vel_front, vel_back
 
 
@@ -243,5 +244,6 @@ class Isovel:
 mstar, pa, inc, z0, psi, vlsr =(1.2047920150052118, 325.15077530944075, 46.41703391829195, 0.2494024079038776, 1.211576566441788, 4.741979863714648)
 vels_lev = np.array([3,3.7,4.4,5.1,5.8,6.5])
 
-Isovel = Isovel(mstar, pa, inc, z0, psi, vlsr, vels_lev)
-vel_thin, vel_front, vel_back = Isovel.calculate_vel()
+Isovel_disk = Isovel(mstar, pa, inc, z0, psi, vlsr, vels_lev)
+vel_thin, vel_front, vel_back = Isovel_disk.calculate_vel()
+print(vel_thin, vel_front, vel_back)
