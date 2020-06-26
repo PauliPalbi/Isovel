@@ -1,5 +1,6 @@
 # This to start documentation
 import numpy as np
+import numpy.ma as ma
 import astropy.constants as const
 from scipy.ndimage.interpolation import rotate
 from scipy import optimize
@@ -61,7 +62,7 @@ def cilindrical_coords(pix_to_au, xx, yy, zz, Dim_3 = False):
     return rr_km, theta
 
 
-def f(t, ixp, iyp):
+def f(t, ixp, iyp, inc, phi):
     """
     we assume flared is a cone
 
@@ -102,11 +103,10 @@ def surface_projection(inc, phi, xxp, yyp, nx, ny):
     tt_front = np.zeros(yyp.shape) # front side of the disk
     #vel_back
     tt_back = np.zeros(yyp.shape) # back side of the disk
-    inc= inc
-    phi=phi
+
     for ix in range(nx):
         for iy in range(ny):
-            sol = optimize.root(f, [0.], args=(xxp[ix,iy],yyp[ix,iy]), method='lm')
+            sol = optimize.root(f, [0.], args=(xxp[ix,iy],yyp[ix,iy], inc, phi), method='lm')
             if inc<180:
                 tt_front[ix,iy] = np.abs(sol.x) # au
                 tt_back[ix,iy] = -np.abs(sol.x)
@@ -116,7 +116,9 @@ def surface_projection(inc, phi, xxp, yyp, nx, ny):
     return tt_front, tt_back
 
 
-def calculate_vel(mstar, pa, inc, z0, psi, vlsr, vels_lev, R_max=300, v_max=5, nx=300, ny=300, southcloser=True, pix_to_au =1, border=550):
+def calculate_vel(mstar, pa, inc, z0, psi, vlsr, vels_lev, 
+                R_max=300, v_max=5, nx=300, ny=300, 
+                southcloser=True, pix_to_au =1, border=550):
     """
     """
     phi = np.arctan(z0*1**psi)
@@ -145,7 +147,8 @@ def calculate_vel(mstar, pa, inc, z0, psi, vlsr, vels_lev, R_max=300, v_max=5, n
 
     vel_front = Keplerian_rotation(mstar,theta_front, inc, pa, rr_front)
     vel_back = Keplerian_rotation(mstar,theta_back, inc, pa, rr_back)
-
+    
+    '''
     pa = np.radians(pa)
     mask_contour_front = rotate(rr_front, pa, reshape=False)[:][:]>border
     mask_contour_back= rotate(rr_back, pa, reshape=False)[:][:]>border
@@ -154,20 +157,9 @@ def calculate_vel(mstar, pa, inc, z0, psi, vlsr, vels_lev, R_max=300, v_max=5, n
     vel_front = np.ma.array(vel_front, mask=mask_contour_front)
     vel_back = np.ma.array(vel_back, mask=mask_contour_back)
     vel_thin = np.ma.array(vel_thin, mask=mask_contour_thin)
-
+    '''
     return vel_thin, vel_front, vel_back
 
-
-
-
-def power_z_function(z0, psi, r):
-    """
-    power law of surface shape, not used for now
-
-
-    """
-    z = z0 * np.power(r, psi)
-    return z
 
 
 
@@ -202,7 +194,6 @@ def plot_velocities():
 
     pl.show()
 '''
-
 '''
 R_max=300
 v_max=5
@@ -211,9 +202,10 @@ ny=300
 southcloser=True
 pix_to_au =1
 
-mstar, pa, inc, z0, psi, vlsr =(1.2047920150052118, 325.15077530944075, 46.41703391829195, 0.2494024079038776, 1.211576566441788, 4.741979863714648)
+mstar, pa, inc, z0, psi, vlsr =(1.2047920150052118, 325.15077530944075, 46.41703391829195,   
+                                0.2494024079038776, 1.211576566441788, 4.741979863714648)
 vels_lev = np.array([3,3.7,4.4,5.1,5.8,6.5])
 
-Isovel = Isovel(mstar, pa, inc, z0, psi, vlsr, vels_lev)
-vel_thin, vel_front, vel_back = Isovel.calculate_vel()
+vel_thin, vel_front, vel_back = calculate_vel(mstar, pa, inc, z0, psi, vlsr, vels_lev)
+print(vel_thin, vel_front, vel_back)
 '''
