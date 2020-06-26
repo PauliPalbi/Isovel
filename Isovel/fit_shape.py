@@ -25,32 +25,32 @@ def fit_Gas(path, name_file,
     It can return just the fit best values or more features
 
     Args:
-        path (str) : The path were you saved the bettermoments results (name_v0.fits and name_dv0.fits)
-        name_file (str) : name of your Cube fits file
-        d (float) : distance in parsecs
-        vlsr (float) : velosity of the system in m/s
-        z0 (float) : amplitude value of power law in arcsec
-        psi (float) : flared value of power law
-        PA (float) : position angle of the source in deg
-        inc (float) : inclination of the disk in deg
-        mstar=1 (float) :(optional) mass of the central star in units of Msun
-        x0=0 (float) :(optional) offset of the cube in horizontal direction in units of arcsec
-        y0=0 (float) :(optional) offset of the cube in vertical direction in units of arcsec
-        r_min=1.5 (float) :(optional) min radius for the mask #can be check by using just_results=False in units of arcsec
-        r_max=2.3 (float) :(optional) max radius for the mask #can be check by using just_results=False in units of arcsec
+        path (str)          :The path were you saved the bettermoments results (name_v0.fits and name_dv0.fits)
+        name_file (str)     :name of your Cube fits file
+        d (float)           :distance in parsecs
+        vlsr (float)        :velosity of the system in m/s
+        z0 (float)          : amplitude value of power law in arcsec
+        psi (float)         : flared value of power law
+        PA (float)          : position angle of the source in deg
+        inc (float)         : inclination of the disk in deg
+        mstar=1 (float)     :(optional) mass of the central star in units of Msun
+        x0=0 (float)        :(optional) offset of the cube in horizontal direction in units of arcsec
+        y0=0 (float)        :(optional) offset of the cube in vertical direction in units of arcsec
+        r_min=1.5 (float)   :(optional) min radius for the mask #can be check by using just_results=False in units of arcsec
+        r_max=2.3 (float)   :(optional) max radius for the mask #can be check by using just_results=False in units of arcsec
         downsample=20 (int) :(optional) Downsample value
-        clip=3 (int) :(optional) Clip value
-        nwalkers=50 (int) :(optional) Number of walkers
-        nburnin=500 (int) :(optional) Number of stepts that will be burn
-        nsteps=3000 (int) :(optional) Tot number of steps
-        beam=False (bool) :(optional) Use this as a default
-        just_results=True (bool) :(optional) To return just best fit. Use =False to return more features
+        clip=3 (int)        :(optional) Clip value
+        nwalkers=50 (int)   :(optional) Number of walkers
+        nburnin=500 (int)   :(optional) Number of stepts that will be burn
+        nsteps=3000 (int)   :(optional) Tot number of steps
+        beam=False (bool)   :(optional) Use this as a default
+        just_results(bool)  :(optional) To return just best fit. Use =False to return more features
 
     Returns:
-        dicti (dictionary): Disctionary with all best fit values and some more important or useful values
-        cube (class) :(optional)  Cube to work with in eddys code
-        samples (np.array):(optional) array that has the shape (iterations, nwalkers) with all steps of mcmc
-        percentiles :(optional) Return bestfit values and percentiles
+        dicti (dictionary)  : Disctionary with all best fit values and some more important or useful values
+        cube (class)        :(optional)  Cube to work with in eddys code
+        samples (np.array)  :(optional) array that has the shape (iterations, nwalkers) with all steps of mcmc
+        percentiles         :(optional) Return bestfit values and percentiles
     """
     # if you dont know distance and know par: d = 1000/par #pc  par = xx #mas
     # example of p0 for J1615 : p0 = [0, 0, 1.248, 4753., 0.27, 1.22,  180+Pa, Inc]
@@ -76,25 +76,25 @@ def fit_eddy(path, name_file, d, p0, r_min, r_max, downsample=20,
     This perform the fit using eddy.fit_cube
 
     Args:
-        path (str) : The path were you saved the bettermoments results (name_v0.fits and name_dv0.fits)
-        name_file (str) : name of your Cube fits file
-        d (float) : distance in parsecs
-        p0 (list) : python 8 dim list with first guest of bestfit
-        r_min=1.5 (float) :(optional) min radius for the mask #can be check by using just_results=False in units of arcsec
-        r_max=2.3 (float) :(optional) max radius for the mask #can be check by using just_results=False in units of arcsec
-        downsample=20 (int) :(optional) Downsample value
-        clip=3 (int) :(optional) Clip value
-        nwalkers=50 (int) :(optional) Number of walkers
-        nburnin=500 (int) :(optional) Number of stepts that will be burn
-        nsteps=3000 (int) :(optional) Tot number of steps
-        beam=False (bool) :(optional) Use this as a default
-        just_results=True (bool) :(optional) To return just best fit. Use =False to return more features
+        path (str)              : The path were you saved the bettermoments results (name_v0.fits and name_dv0.fits)
+        name_file (str)         : name of your Cube fits file
+        d (float)               : distance in parsecs
+        p0 (list)               : python 8 dim list with first guest of bestfit
+        r_min=1.5 (float)       :(optional) min radius for the mask #can be check by using just_results=False in units of arcsec
+        r_max=2.3 (float)       :(optional) max radius for the mask #can be check by using just_results=False in units of arcsec
+        downsample=20 (int)     :(optional) Downsample value
+        clip=3 (int)            :(optional) Clip value
+        nwalkers=50 (int)       :(optional) Number of walkers
+        nburnin=500 (int)       :(optional) Number of stepts that will be burn
+        nsteps=3000 (int)       :(optional) Tot number of steps
+        beam=False (bool)       :(optional) Use this as a default
+        just_results(bool)      :(optional) To return just best fit. Use =False to return more features
 
     Returns:
-        dicti (dictionary) : Disctionary with all best fit values and some more important or useful values
-        cube (class) : Cube to work with in eddys code
-        samples (np.array) : Array that has the shape (iterations, nwalkers) with all steps of mcmc
-        percentiles : Return bestfit values and percentiles
+        dicti (dictionary)      :Disctionary with all best fit values and some more important or useful values
+        cube (class)            :Cube to work with in eddys code
+        samples (np.array)      :Array that has the shape (iterations, nwalkers) with all steps of mcmc
+        percentiles             :Return bestfit values and percentiles
     """
     cube = rotationmap(path=path+name_file+'v0.fits',
                     uncertainty=path+name_file+'dv0.fits',

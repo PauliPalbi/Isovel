@@ -110,7 +110,7 @@ class Isovel:
 
         yy_far = yyp/np.cos(self.inc) + tt_far*np.sin(self.inc)
         zz_far = tt_far*np.cos(self.inc)
-        rr_far_cm = np.sqrt(xx**2+yy_far**2+zz_far**2) * self.pix_to_au*au # cm
+        rr_far_cm = np.sqrt(xx**2+yy_far**2+zz_far**2) * self.pix_to_au * au # cm
         theta_far = np.arctan2(yy_far,xx)
 
         vel_near = np.sqrt(G* self.mstar/rr_near_cm)*np.sin(self.inc)*np.cos(theta_near)/1e5 # km/s
@@ -130,3 +130,4 @@ class Isovel:
         vel_thin = np.ma.array(vel_thin, mask=mask_contour_thin)
         '''
         return vel_near, vel_far, vel_thin
+

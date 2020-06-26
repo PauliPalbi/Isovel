@@ -148,8 +148,70 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="fitt-gas-shape">
-<span id="fit-shape"></span><h1>Fitt gas shape<a class="headerlink" href="#fitt-gas-shape" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-fit_shape">
+<span id="fitt-gas-shape"></span><span id="fit-shape"></span><h1>Fitt gas shape<a class="headerlink" href="#module-fit_shape" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="fit_shape.fit_Gas">
+<code class="sig-prename descclassname">fit_shape.</code><code class="sig-name descname">fit_Gas</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">name_file</span></em>, <em class="sig-param"><span class="n">d</span></em>, <em class="sig-param"><span class="n">vlsr</span></em>, <em class="sig-param"><span class="n">z0</span></em>, <em class="sig-param"><span class="n">psi</span></em>, <em class="sig-param"><span class="n">PA</span></em>, <em class="sig-param"><span class="n">inc</span></em>, <em class="sig-param"><span class="n">mstar</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">x0</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">y0</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">r_min</span><span class="o">=</span><span class="default_value">1.5</span></em>, <em class="sig-param"><span class="n">r_max</span><span class="o">=</span><span class="default_value">2.3</span></em>, <em class="sig-param"><span class="n">downsample</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">clip</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">nwalkers</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">nburnin</span><span class="o">=</span><span class="default_value">500</span></em>, <em class="sig-param"><span class="n">nsteps</span><span class="o">=</span><span class="default_value">3000</span></em>, <em class="sig-param"><span class="n">beam</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">just_results</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fit_shape.fit_Gas" title="Permalink to this definition">¶</a></dt>
+<dd><p>This perform a fit to the gas data that has to be saved as the results after applying bettermoments
+It can return just the fit best values or more features</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>path (str)          :The path were you saved the bettermoments results (name_v0.fits and name_dv0.fits)
+name_file (str)     :name of your Cube fits file
+d (float)           :distance in parsecs
+vlsr (float)        :velosity of the system in m/s
+z0 (float)          : amplitude value of power law in arcsec
+psi (float)         : flared value of power law
+PA (float)          : position angle of the source in deg
+inc (float)         : inclination of the disk in deg
+mstar=1 (float)     :(optional) mass of the central star in units of Msun
+x0=0 (float)        :(optional) offset of the cube in horizontal direction in units of arcsec
+y0=0 (float)        :(optional) offset of the cube in vertical direction in units of arcsec
+r_min=1.5 (float)   :(optional) min radius for the mask #can be check by using just_results=False in units of arcsec
+r_max=2.3 (float)   :(optional) max radius for the mask #can be check by using just_results=False in units of arcsec
+downsample=20 (int) :(optional) Downsample value
+clip=3 (int)        :(optional) Clip value
+nwalkers=50 (int)   :(optional) Number of walkers
+nburnin=500 (int)   :(optional) Number of stepts that will be burn
+nsteps=3000 (int)   :(optional) Tot number of steps
+beam=False (bool)   :(optional) Use this as a default
+just_results(bool)  :(optional) To return just best fit. Use =False to return more features</p>
+</dd>
+<dt>Returns:</dt><dd><p>dicti (dictionary)  : Disctionary with all best fit values and some more important or useful values
+cube (class)        :(optional)  Cube to work with in eddys code
+samples (np.array)  :(optional) array that has the shape (iterations, nwalkers) with all steps of mcmc
+percentiles         :(optional) Return bestfit values and percentiles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="fit_shape.fit_eddy">
+<code class="sig-prename descclassname">fit_shape.</code><code class="sig-name descname">fit_eddy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">name_file</span></em>, <em class="sig-param"><span class="n">d</span></em>, <em class="sig-param"><span class="n">p0</span></em>, <em class="sig-param"><span class="n">r_min</span></em>, <em class="sig-param"><span class="n">r_max</span></em>, <em class="sig-param"><span class="n">downsample</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">clip</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">nwalkers</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">nburnin</span><span class="o">=</span><span class="default_value">500</span></em>, <em class="sig-param"><span class="n">nsteps</span><span class="o">=</span><span class="default_value">3000</span></em>, <em class="sig-param"><span class="n">beam</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fit_shape.fit_eddy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This perform the fit using eddy.fit_cube</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>path (str)              : The path were you saved the bettermoments results (name_v0.fits and name_dv0.fits)
+name_file (str)         : name of your Cube fits file
+d (float)               : distance in parsecs
+p0 (list)               : python 8 dim list with first guest of bestfit
+r_min=1.5 (float)       :(optional) min radius for the mask #can be check by using just_results=False in units of arcsec
+r_max=2.3 (float)       :(optional) max radius for the mask #can be check by using just_results=False in units of arcsec
+downsample=20 (int)     :(optional) Downsample value
+clip=3 (int)            :(optional) Clip value
+nwalkers=50 (int)       :(optional) Number of walkers
+nburnin=500 (int)       :(optional) Number of stepts that will be burn
+nsteps=3000 (int)       :(optional) Tot number of steps
+beam=False (bool)       :(optional) Use this as a default
+just_results(bool)      :(optional) To return just best fit. Use =False to return more features</p>
+</dd>
+<dt>Returns:</dt><dd><p>dicti (dictionary)      :Disctionary with all best fit values and some more important or useful values
+cube (class)            :Cube to work with in eddys code
+samples (np.array)      :Array that has the shape (iterations, nwalkers) with all steps of mcmc
+percentiles             :Return bestfit values and percentiles</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 

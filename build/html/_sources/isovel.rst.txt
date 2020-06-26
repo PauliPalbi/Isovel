@@ -1,7 +1,7 @@
-.. _Isovel:
+.. _isovel:
 
 Isovelocities
 =============
 
-.. automodule:: Isovel
+.. automodule:: isovel
    :members:

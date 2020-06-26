@@ -135,7 +135,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/Isovel.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/isovel.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -148,8 +148,44 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-Isovel">
-<span id="isovelocities"></span><span id="isovel"></span><h1>Isovelocities<a class="headerlink" href="#module-Isovel" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-isovel">
+<span id="isovelocities"></span><span id="isovel"></span><h1>Isovelocities<a class="headerlink" href="#module-isovel" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="isovel.Isovel">
+<em class="property">class </em><code class="sig-prename descclassname">isovel.</code><code class="sig-name descname">Isovel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mstar</span></em>, <em class="sig-param"><span class="n">pa</span></em>, <em class="sig-param"><span class="n">inc</span></em>, <em class="sig-param"><span class="n">z0</span></em>, <em class="sig-param"><span class="n">psi</span></em>, <em class="sig-param"><span class="n">vlsr</span></em>, <em class="sig-param"><span class="n">pix_to_au</span></em>, <em class="sig-param"><span class="n">R_max</span><span class="o">=</span><span class="default_value">300</span></em>, <em class="sig-param"><span class="n">v_max</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">nx</span><span class="o">=</span><span class="default_value">300</span></em>, <em class="sig-param"><span class="n">ny</span><span class="o">=</span><span class="default_value">300</span></em>, <em class="sig-param"><span class="n">border</span><span class="o">=</span><span class="default_value">550</span></em><span class="sig-paren">)</span><a class="headerlink" href="#isovel.Isovel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import the parameters of a disk 
+Return the velocities of the mid plane and of the surface of the gas. (Front and back side)</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>mstar (float): Msun units
+pa (float): in degrees
+inc (float): in degrees
+z0 (float): in arcsec
+psi (float): 
+vlsr (float): in km/s
+pix_to_au (float): change of units from pixels to au
+R_max (float): Max radius in au
+v_max (float):
+nx (int): number of points in x
+ny (int): number of points in y
+border (float): Border of the velocity fit in au</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="isovel.Isovel.velocities">
+<code class="sig-name descname">velocities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isovel.Isovel.velocities" title="Permalink to this definition">¶</a></dt>
+<dd><p>This perform the fit using eddy.fit_cube</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>#No inputs directly</p>
+</dd>
+<dt>Returns:</dt><dd><p>v_near (array): array with keplerian vel in front side 
+v_far (array): array with keplerian vel in back side 
+v_thin (array): array with keplerian velocity in the mid plane</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
