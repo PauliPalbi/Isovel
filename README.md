@@ -1,10 +1,22 @@
 # Isovel
 
-The goal is to create a package that draw isovelocity curves over ALMA gas images. 
+Isovel is a python package that draws isovelocity curves over gas images of Disk Substructures at High Angular Resolution Project (DSHARP) conducted with the Atacama Large Milimeter/Submilimeter Array (ALMA).
 
-The isovelocities follow a Kepplerian rotation. 
+## Getting Started
+The most simple way is to use  `pip`,
 
-The starting point is from vivis code. 
+```
+pip install Isovel
+```
+Or by cloning this repository
 
-To test it we are going to use DSHARP disks.  
-https://bulk.cv.nrao.edu/almadata/lp/DSHARP/
+```bash
+# Clone this repository
+git clone https://github.com/PauliPalbi/Isovel
+
+# Go into the repository
+cd Isovel
+
+# Install required modules
+pip install -r requirements.txt
+```
