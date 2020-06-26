@@ -15,11 +15,10 @@ from scipy import optimize
 
 class Isovel:
     def __init__(self, mstar, pa, inc, z0, psi, vlsr, vels_lev, 
-                    R_max=300, v_max=5, nx=100, ny=100, southcloser=True):
+                R_max=300, v_max=5, nx=300, ny=300, southcloser=True, pix_to_au =1):
+
         M_sun = const.M_sun
 
-        from .Isovel import Isovel 
-        
         self.mstar = mstar * M_sun.value
 
         if southcloser:
@@ -43,6 +42,7 @@ class Isovel:
 
         self.nx = nx
         self.ny = ny
+        self.pix_to_au = pix_to_au 
 
 
     def Keplerian_rotation(self, rr_cm, theta):
@@ -89,18 +89,18 @@ class Isovel:
         return xx, yy
 
 
-    def cilindrical_coords(self, xx, yy, zz=None):
-        if zz == None:
-            rr = np.sqrt(xx**2 + yy**2) # au
+    def cilindrical_coords(self, xx, yy, zz, Dim_3 = False):
+        if not Dim_3:
+            rr = np.sqrt(xx**2 + yy**2)*self.pix_to_au # au
         else:
-            rr = np.sqrt(xx**2 + yy**2 + zz**2) # au
+            rr = np.sqrt(xx**2 + yy**2 + zz**2)*self.pix_to_au  # au
         au = 1.496e8 # from au to km
-        rr_cm = rr*au # km
+        rr_km = rr*au # km
         theta = np.arctan2(yy,xx)
-        return rr_cm, theta
+        return rr_km, theta
 
 
-    def flared_disk(self, t, ixp, iyp):
+    def f(self, t, ixp, iyp):
         """
         we assume flared is a cone
 
@@ -143,7 +143,7 @@ class Isovel:
         tt_back = np.zeros(yyp.shape) # back side of the disk
         for ix in range(self.nx):
             for iy in range(self.ny):
-                sol = optimize.root(self.flared_disk, [0.], args=(xxp[ix,iy],yyp[ix,iy]), method='lm')
+                sol = optimize.root(f, [0.], args=(xxp[ix,iy],yyp[ix,iy]), method='lm')
                 if self.inc<180:
                     tt_front[ix,iy] = np.abs(sol.x) # au
                     tt_back[ix,iy] = -np.abs(sol.x)
@@ -153,31 +153,43 @@ class Isovel:
         return tt_front, tt_back
 
 
-    def do_stuff(self):
+    def calculate_vel(self, border=550):
         """
         """
         
         xxp, yyp = self.create_shape()
         x_dep, y_dep = self.deproject_coordinates(xxp, yyp)
 
-        rr, theta = self.cilindrical_coords(x_dep, y_dep) #km and rad
+        z=np.array([])
+        rr, theta = self.cilindrical_coords(x_dep, y_dep, z) #km and rad
 
         vel_thin = self.Keplerian_rotation(rr, theta)
 
         tt_front, tt_back = self.surface_projection(x_dep, y_dep)
 
         inc = np.radians(self.inc)
+
         yy_front = y_dep + tt_front*np.sin(inc)
         zz_front = tt_front*np.cos(inc)
-        rr_front, theta_front = self.cilindrical_coords(x_dep, yy_front, zz=zz_front)
+        print(zz_front)
+        rr_front, theta_front = self.cilindrical_coords(x_dep, yy_front, zz_front, Dim_3=True)
         
         yy_back = y_dep + tt_back*np.sin(inc)
         zz_back = tt_back*np.cos(inc)
-        rr_back, theta_back = self.cilindrical_coords(x_dep, yy_back, zz=zz_back)
+        rr_back, theta_back = self.cilindrical_coords(x_dep, yy_back, zz=zz_back, Dim_3=True)
         
 
         vel_front = self.Keplerian_rotation(rr_front, theta_front)
         vel_back = self.Keplerian_rotation(rr_back, theta_back)
+
+        pa = np.radians(self.pa)
+        mask_contour_front = rotate(rr_front, pa, reshape=False)[:][:]>border
+        mask_contour_back= rotate(rr_back, pa, reshape=False)[:][:]>border
+        mask_contour_thin = rotate(rr, pa, reshape=False)[:][:]>border
+
+        vel_front = np.ma.array(vel_front, mask=mask_contour_front)
+        vel_back = np.ma.array(vel_back, mask=mask_contour_back)
+        vel_thin = np.ma.array(vel_thin, mask=mask_contour_thin)
 
         return vel_thin, vel_front, vel_back
 
@@ -228,3 +240,8 @@ class Isovel:
     '''
 
 
+mstar, pa, inc, z0, psi, vlsr =(1.2047920150052118, 325.15077530944075, 46.41703391829195, 0.2494024079038776, 1.211576566441788, 4.741979863714648)
+vels_lev = np.array([3,3.7,4.4,5.1,5.8,6.5])
+
+Isovel = Isovel(mstar, pa, inc, z0, psi, vlsr, vels_lev)
+vel_thin, vel_front, vel_back = Isovel.calculate_vel()

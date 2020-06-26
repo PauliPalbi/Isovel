@@ -1,4 +1,4 @@
-.. _isovel:
+.. _Isovel:
 
 Isovelocities
 =============
