@@ -8,9 +8,7 @@
 # bettermoments path/to/cube.fits
 
 import numpy as np
-import math
 import matplotlib.pyplot as plt
-import matplotlib.colors as colors
 from eddy.fit_cube import rotationmap
 from multiprocessing import Pool
 
