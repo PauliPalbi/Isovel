@@ -22,7 +22,7 @@ pip install -r requirements.txt
 ```
 
 ## Running a Test
-Start by using an fiducial image (_CO.fits) from the [DSHARP Data Release webpage](https://almascience.nrao.edu/almadata/lp/DSHARP/images/).
+Start by using an fiducial image (_CO.fits) from the [DSHARP Data Release](https://almascience.nrao.edu/almadata/lp/DSHARP/images/).
 
 In the case where the shape of the gas of the disk is unknown, install [`eddy`](https://github.com/richteague/eddy)
 
@@ -41,4 +41,4 @@ bettermoments path/to/cube.fits
 
 ## Acknowledgments
 
-* This project is part of the [2020 Code/Astro workshop](https://semaphorep.github.io/codeastro/) to develope and release an open-source astromony package.
+This project is part of the [2020 Code/Astro workshop](https://semaphorep.github.io/codeastro/) to develope and release an open-source astromony package.
