@@ -1,2 +1,2 @@
 
-from .Isovel import Isovel
+from .isovel import Isovel

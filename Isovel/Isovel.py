@@ -9,7 +9,7 @@ from astropy.io import fits
 
 class Isovel:
     def __init__(self, mstar, pa, inc, z0, psi, vlsr, vels_lev, 
-                R_max=300, v_max=5, nx=300, ny=300, pix_to_au =1, border=550):
+                R_max=300, v_max=5, nx=300, ny=300, pix_to_au =0.45729001117381146, border=550):
 
         M_sun = const.M_sun.to(u.g)
 
@@ -37,7 +37,7 @@ class Isovel:
         self.border = border
 
 
-    def isovel(self):
+    def velocities(self):
             # projected coordinates (should be xprime, yprime)
         G = const.G.value*1000
 
@@ -79,21 +79,19 @@ class Isovel:
         yy_near = yyp/np.cos(self.inc) + tt_near*np.sin(self.inc)
         zz_near = tt_near*np.cos(self.inc)
         rr_near = np.sqrt(xx**2+yy_near**2+zz_near**2)*pix_to_au # au
-        #rr_pos = np.sqrt(xx**2+yy_pos**2) # au
         rr_near_cm = rr_near*au # cm
         theta_near = np.arctan2(yy_near,xx)
 
         yy_far = yyp/np.cos(self.inc) + tt_far*np.sin(self.inc)
         zz_far = tt_far*np.cos(self.inc)
         rr_far = np.sqrt(xx**2+yy_far**2+zz_far**2)*pix_to_au # au
-        #rr_neg = np.sqrt(xx**2+yy_neg**2) # au
         rr_far_cm = rr_far*au # cm
         theta_far = np.arctan2(yy_far,xx)
 
         vel_near = np.sqrt(G*mstar/rr_near_cm)*np.sin(self.inc)*np.cos(theta_near)/1e5 # km/s
         vel_far = np.sqrt(G*mstar/rr_far_cm)*np.sin(self.inc)*np.cos(theta_far)/1e5 # km/s
 
-            # rotate
+        # rotate
         vel_near = rotate(vel_near,self.pa, reshape=False)
         vel_far = rotate(vel_far,self.pa, reshape=False)
 
