@@ -31,7 +31,7 @@ def fit_Gas(path, name_file,
         name_file (str) : name of your Cube fits file
         d (float) : distance in parsecs
         vlsr (float) : velosity of the system in m/s
-        z0 (float) : amplitude value of power law in 
+        z0 (float) : amplitude value of power law in arcsec
         psi (float) : flared value of power law
         PA (float) : position angle of the source in deg
         inc (float) : inclination of the disk in deg
