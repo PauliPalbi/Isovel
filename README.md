@@ -20,3 +20,21 @@ cd Isovel
 # Install required modules
 pip install -r requirements.txt
 ```
+
+## Running a Test
+Start by using an fiducial image (_CO.fits) from the [DSHARP Data Release webpage] (https://almascience.nrao.edu/almadata/lp/DSHARP/images/).
+
+In the case where the shape of the gas of the disk is unknown, install [`eddy`](https://github.com/richteague/eddy)
+
+```
+pip install astro-eddy
+```
+
+and [bettermoments](https://github.com/richteague/bettermoments) 
+
+```
+pip install bettermoments
+
+bettermoments path/to/cube.fits
+```
+
